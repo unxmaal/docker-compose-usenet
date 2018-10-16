@@ -134,6 +134,28 @@ services:
       com.centurylinklabs.watchtower.enable: "true"
     restart: unless-stopped
 
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    hostname: bazarr
+    ports:
+      - "6767:6767"
+    volumes:
+      - ${CONFIG}/bazarr:/config
+      - ${DATA}/movies:/movies
+      - ${DATA}/tv:/tv
+    environment:
+      - PGID
+      - PUID
+      - TZ
+    labels:
+      traefik.enable: "true"
+      traefik.port: "6767"
+      traefik.frontend.rule: "Host:bazarr.${DOMAIN}"
+      traefik.frontend.auth.basic: "${HTPASSWD}"
+      com.centurylinklabs.watchtower.enable: "true"
+    restart: unless-stopped
+
   lazylibrarian:
     image: linuxserver/lazylibrarian:latest
     container_name: lazylibrarian
