@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: '3.6'
 
 services:
 
@@ -29,6 +29,15 @@ services:
     image: v2tec/watchtower:latest
     command: --cleanup --label-enable --schedule="0 2 * * *"
     container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+    restart: unless-stopped
+
+  autoheal:
+    image: willfarrell/autoheal
+    container_name: autoheal
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
@@ -298,10 +307,17 @@ services:
       - PGID
       - PUID
       - WEB_PASSWD=pNTgQj4hfJPPiGVFt9re
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5050"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     labels:
       traefik.enable: "true"
       traefik.port: "5050"
       traefik.frontend.rule: "Host:flexget.${DOMAIN}"
       traefik.frontend.auth.basic: "${HTPASSWD}"
+      autoheal: "true"
       com.centurylinklabs.watchtower.enable: "true"
     restart: unless-stopped
