@@ -5,11 +5,10 @@ services:
 
 before_install:
   - sudo pip install yamllint -qqq
+  - sudo apt update
+  - sudo apt upgrade
 
 script:
-  - COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
-  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-  - chmod +x /usr/local/bin/docker-compose
   - yamllint -c .lint.yml docker-compose.yml
   - cp example.env .env
   - docker-compose config --services
