@@ -5,8 +5,8 @@ services:
 
 before_install:
   - sudo pip install yamllint -qqq
-  - apt-get install --only-upgrade docker
-  - apt-get install --only-upgrade docker-compose
+  - sudo apt-get install --only-upgrade docker
+  - sudo apt-get install --only-upgrade docker-compose
 
 script:
   - yamllint -c .lint.yml docker-compose.yml
