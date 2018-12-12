@@ -17,6 +17,7 @@ An automated Usenet pipeline with reverse proxy and auto-updating of services, p
 - [Tautulli (aka PlexPy)](https://hub.docker.com/r/linuxserver/tautulli/)
 - [Heimdall](https://hub.docker.com/r/duhio/heimdall-https/)
 - [Watchtower](https://hub.docker.com/r/v2tec/watchtower/)
+- [Autoheal](https://hub.docker.com/willfarrell/autoheal)
 - [DDClient](https://hub.docker.com/r/linuxserver/ddclient/)
 
 ## Requirements
